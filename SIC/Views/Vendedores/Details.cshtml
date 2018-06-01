@@ -1,0 +1,74 @@
+﻿@model shanuMVCUserRoles.Entidad.Vendedor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Vendedor</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NombreVendedor)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NombreVendedor)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ApellidoVendedor)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ApellidoVendedor)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CodVendedor)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CodVendedor)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Eliminado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Eliminado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreadoUTC)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreadoUTC)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ModificadoUTC)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ModificadoUTC)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdVendedor }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

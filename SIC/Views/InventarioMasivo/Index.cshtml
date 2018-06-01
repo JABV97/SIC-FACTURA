@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model System.Data.DataTable
+@using System.Data
+
+<section class="content-header">
+    <h1>
+        Inventario Masivo
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li class="active">Inventario Masivo</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Subir Inventario</h2>
+                    @using (Html.BeginForm("Index", "InventarioMasivo", FormMethod.Post, new { enctype = "multipart/form-data" } ))
+                    {
+                        @Html.AntiForgeryToken();
+                        @Html.ValidationSummary();
+
+                        <label class="text-info">Upload Excel File</label>
+                        <input type="file" class="form-control" name="uploadfile" id="uploadfile" />
+                        <input type="submit" value="Subir" class="btn btn-default" />
+
+                        if (Model != null)
+                        {
+                             <input type="submit" value="Confirmar" class="btn btn-default" />
+                        }
+
+                        if (Model != null)
+                        {
+
+                            <table  id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        @foreach (DataColumn column in Model.Columns)
+                                        {
+                                            <th>@column.ColumnName</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (DataRow row in Model.Rows)
+                                    {
+                                        <tr>
+                                            @foreach (DataColumn col in Model.Columns)
+                                            {
+                                                <td>@row[col.ColumnName]</td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $("#example1").dataTable();
+    });
+</script>
+}

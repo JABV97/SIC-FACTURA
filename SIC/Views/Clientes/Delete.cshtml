@@ -1,0 +1,82 @@
+﻿@model shanuMVCUserRoles.Entidad.Cliente
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Eliminar clientes
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li>@Html.ActionLink("Clientes", "Index")</li>
+        <li class="active">Eliminar</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="callout callout-danger">
+        <h5>¿Está seguro que desea eliminar este registro?</h5>
+    </div>
+    <div class='box box-default color-palette-box'>
+        <div class='box-header with-border'>
+            <h3 class='box-title'><i class="fa fa-tag"></i>Cliente seleccionado</h3>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="box-body">
+                @Html.HiddenFor(model => model.IdCliente)
+                @Html.HiddenFor(model => model.Nombre)
+                @Html.HiddenFor(model => model.Apellido)
+                @Html.HiddenFor(model => model.Direccion)
+                @Html.HiddenFor(model => model.Telefono)
+                @Html.HiddenFor(model => model.Eliminado, new { @Value = true })
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nombre)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Apellido)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Apellido)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Direccion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Direccion)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Telefono)
+                    </dd>
+
+                </dl>
+                <div class="box-footer">
+                    <input type="submit" value="Delete" class="btn btn-primary" /> |
+                    @Html.ActionLink("Cancelar", "Index", "", new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+
+    </div>
+</section>

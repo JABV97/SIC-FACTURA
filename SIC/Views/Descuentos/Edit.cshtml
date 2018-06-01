@@ -1,0 +1,81 @@
+﻿@model shanuMVCUserRoles.Entidad.Descuento
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Editar descuento
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li>@Html.ActionLink("Descuentos", "Index")</li>
+        <li class="active">Editar</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <div class='box box-default color-palette-box'>
+        <div class='box-header with-border'>
+            <h3 class='box-title'><i class="fa fa-tag"></i>Descuentos</h3>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="box-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IdDescuento)
+                @Html.HiddenFor(model => model.CreadoUTC)
+                @Html.HiddenFor(model => model.ModificadoUTC, new { @Value = DateTime.Now.ToString() })
+                @Html.HiddenFor(model => model.Eliminado, new { @Value = false })
+                <div class="row">
+                    <!--POR CADA DOS CAMPOS, ENCERRAR EN UN DIV CLASS=ROW-->
+
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.nombre)
+                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.deduccion)
+                        @Html.EditorFor(model => model.deduccion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.deduccion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+
+                <!--POR CADA DOS CAMPOS, ENCERRAR EN UN DIV CLASS=ROW-->
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.activo)
+                        @Html.EditorFor(model => model.activo, new { htmlAttributes = new { @class = "checkbox" } })
+                        @Html.ValidationMessageFor(model => model.activo, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="box-footer">
+                    <input type="submit" value="Editar" class="btn btn-primary" /> |
+                    @Html.ActionLink("Cancelar", "Index", "", new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

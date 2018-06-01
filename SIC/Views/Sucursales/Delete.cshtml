@@ -1,0 +1,49 @@
+﻿@model shanuMVCUserRoles.Entidad.Sucursal
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Eliminar Sucursal
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li>@Html.ActionLink("Sucursales", "Index")</li>
+        <li class="active">Eliminar</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="callout callout-danger">
+        <h5>¿Está seguro que desea eliminar este registro?</h5>
+    </div>
+    <div class='box box-default color-palette-box'>
+        <div class='box-header with-border'>
+            <h3 class='box-title'><i class="fa fa-tag"></i>Sucursal seleccionada</h3>
+        </div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Ubicacion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="box-footer">
+                <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+                @Html.ActionLink("Cancelar", "Index", "", new { @class = "btn btn-danger" })
+            </div>
+        }
+    </div>
+
+</section>

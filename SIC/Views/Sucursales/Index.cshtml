@@ -1,0 +1,82 @@
+﻿@model IEnumerable<shanuMVCUserRoles.Entidad.Sucursal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Sucursales
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li class="active">Sucursales</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Administrar sucursales</h2>
+                </div><!-- /.box-header -->
+                <div class="box-header">
+                    <h5 class="box-title">
+                        @Html.ActionLink("Crear Nuevo", "Create", "", new { @class = "btn btn-info" })
+                    </h5>
+                </div>
+
+                <div class="box-body">
+
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ubicacion)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ubicacion)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSucursal }) |
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSucursal }, new { @class = "text-red" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ubicacion)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+    $(function () {
+        $("#example1").dataTable();
+    });
+    </script>
+}

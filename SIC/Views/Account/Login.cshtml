@@ -1,0 +1,59 @@
+﻿@using shanuMVCUserRoles.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div class="login-box">
+    <div class="login-logo">
+        <span class="logo-lg"> <img src="~/Content/dist/img/logoPrincipal.png"/></span>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Iniciar sesión</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group has-feedback">
+            
+                @Html.TextBoxFor(m => m.UserName, new { placeholder = "Usuario", @class = "form-control" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+           
+        </div>
+        <div class="form-group has-feedback">
+           
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Contraseña", @class = "form-control" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+            </div>
+
+
+            <div class="col-xs-4">
+                <input type="submit" value="Ingresar" class="btn bg-maroon btn-block btn-flat" />
+
+            </div>
+        </div>
+            @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+            }
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,587 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_A372E9_nopcurvasDesignModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Apartado">
+    <Key>
+      <PropertyRef Name="IdApartado" />
+    </Key>
+    <Property Name="IdApartado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+    <Property Name="IdVendedor" Type="Int32" Nullable="false" />
+    <Property Name="TotalProducto" Type="Double" Nullable="false" />
+    <Property Name="Cuota" Type="Double" Nullable="false" />
+    <Property Name="FechaCuotaUno" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaCuotaDos" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="IVA" Type="Double" Nullable="false" />
+    <Property Name="Anulado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Apartado_Cliente" FromRole="Apartado" ToRole="Cliente" />
+    <NavigationProperty Name="Sucursal" Relationship="Self.FK_Apartado_Sucursal" FromRole="Apartado" ToRole="Sucursal" />
+    <NavigationProperty Name="Vendedor" Relationship="Self.FK_Apartado_Vendedor" FromRole="Apartado" ToRole="Vendedor" />
+    <NavigationProperty Name="DetalleApartado" Relationship="Self.FK_DetalleApartado_Apartado" FromRole="Apartado" ToRole="DetalleApartado" />
+    <NavigationProperty Name="Recibo" Relationship="Self.FK_Recibo_Apartado" FromRole="Apartado" ToRole="Recibo" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Apartado" Relationship="Self.FK_Apartado_Cliente" FromRole="Cliente" ToRole="Apartado" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Cliente" FromRole="Cliente" ToRole="Factura" />
+    <NavigationProperty Name="Recibo" Relationship="Self.FK_Recibo_Cliente" FromRole="Cliente" ToRole="Recibo" />
+  </EntityType>
+  <EntityType Name="Descuento">
+    <Key>
+      <PropertyRef Name="IdDescuento" />
+    </Key>
+    <Property Name="IdDescuento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Deduccion" Type="Double" Nullable="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="DetalleApartado">
+    <Key>
+      <PropertyRef Name="IdDetalleApartado" />
+    </Key>
+    <Property Name="IdDetalleApartado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdApartado" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="Sku" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NombreProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Double" Nullable="false" />
+    <Property Name="Total" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Apartado" Relationship="Self.FK_DetalleApartado_Apartado" FromRole="DetalleApartado" ToRole="Apartado" />
+  </EntityType>
+  <EntityType Name="DetalleFactura">
+    <Key>
+      <PropertyRef Name="IdDetalle_Factura" />
+    </Key>
+    <Property Name="IdDetalle_Factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdFactura" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Sku" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NombreProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Double" Nullable="false" />
+    <Property Name="Total" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_DetalleFactura_Factura" FromRole="DetalleFactura" ToRole="Factura" />
+  </EntityType>
+  <EntityType Name="Factura">
+    <Key>
+      <PropertyRef Name="IdFactura" />
+    </Key>
+    <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="SubTotal" Type="Double" Nullable="false" />
+    <Property Name="GranTotal" Type="Double" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Descuento" Type="Double" Nullable="false" />
+    <Property Name="IdVendedor" Type="Int32" Nullable="false" />
+    <Property Name="NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TasaCambio" Type="Double" Nullable="false" />
+    <Property Name="Anulado" Type="Boolean" Nullable="false" />
+    <Property Name="IVA" Type="Double" Nullable="false" />
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Factura_Cliente" FromRole="Factura" ToRole="Cliente" />
+    <NavigationProperty Name="DetalleFactura" Relationship="Self.FK_DetalleFactura_Factura" FromRole="Factura" ToRole="DetalleFactura" />
+    <NavigationProperty Name="Sucursal" Relationship="Self.FK_Factura_Sucursal1" FromRole="Factura" ToRole="Sucursal" />
+    <NavigationProperty Name="Vendedor" Relationship="Self.FK_Factura_Vendedor" FromRole="Factura" ToRole="Vendedor" />
+    <NavigationProperty Name="PagoFactura" Relationship="Self.FK_PagoFactura_Factura" FromRole="Factura" ToRole="PagoFactura" />
+  </EntityType>
+  <EntityType Name="Gasto">
+    <Key>
+      <PropertyRef Name="IdGasto" />
+    </Key>
+    <Property Name="IdGasto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="GastosOrganizacion" Relationship="Self.FK_GastosOrganizacion_Gasto" FromRole="Gasto" ToRole="GastosOrganizacion" />
+  </EntityType>
+  <EntityType Name="GastosOrganizacion">
+    <Key>
+      <PropertyRef Name="IdGastosOrganizacion" />
+    </Key>
+    <Property Name="IdGastosOrganizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdGasto" Type="Int32" Nullable="false" />
+    <Property Name="Valor" Type="Double" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_GastosOrganizacion_Gasto" FromRole="GastosOrganizacion" ToRole="Gasto" />
+    <NavigationProperty Name="Sucursal" Relationship="Self.FK_GastosOrganizacion_Sucursal1" FromRole="GastosOrganizacion" ToRole="Sucursal" />
+  </EntityType>
+  <EntityType Name="IVA">
+    <Key>
+      <PropertyRef Name="IdIVA" />
+    </Key>
+    <Property Name="IdIVA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IVA1" Type="Double" Nullable="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="MetodoPago">
+    <Key>
+      <PropertyRef Name="IdMetodoPago" />
+    </Key>
+    <Property Name="IdMetodoPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="PagoFactura" Relationship="Self.FK_PagoFactura_MetodoPago" FromRole="MetodoPago" ToRole="PagoFactura" />
+    <NavigationProperty Name="PagoRecibo" Relationship="Self.FK_PagoRecibo_MetodoPago" FromRole="MetodoPago" ToRole="PagoRecibo" />
+  </EntityType>
+  <EntityType Name="Moneda">
+    <Key>
+      <PropertyRef Name="IdMoneda" />
+    </Key>
+    <Property Name="IdMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Valor" Type="Double" Nullable="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="PagoFactura">
+    <Key>
+      <PropertyRef Name="IdPagoFactura" />
+    </Key>
+    <Property Name="IdPagoFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdFactura" Type="Int32" Nullable="false" />
+    <Property Name="IdMetodoPago" Type="Int32" Nullable="false" />
+    <Property Name="Pagado" Type="Double" Nullable="false" />
+    <Property Name="Moneda" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_PagoFactura_Factura" FromRole="PagoFactura" ToRole="Factura" />
+    <NavigationProperty Name="MetodoPago" Relationship="Self.FK_PagoFactura_MetodoPago" FromRole="PagoFactura" ToRole="MetodoPago" />
+  </EntityType>
+  <EntityType Name="PagoRecibo">
+    <Key>
+      <PropertyRef Name="IdPagoRecibo" />
+    </Key>
+    <Property Name="IdPagoRecibo" Type="Int32" Nullable="false" />
+    <Property Name="IdRecibo" Type="Int32" Nullable="false" />
+    <Property Name="IdMetodoDePago" Type="Int32" Nullable="false" />
+    <Property Name="Pagado" Type="Double" Nullable="false" />
+    <NavigationProperty Name="MetodoPago" Relationship="Self.FK_PagoRecibo_MetodoPago" FromRole="PagoRecibo" ToRole="MetodoPago" />
+    <NavigationProperty Name="Recibo" Relationship="Self.FK_PagoRecibo_Recibo" FromRole="PagoRecibo" ToRole="Recibo" />
+  </EntityType>
+  <EntityType Name="Pedido">
+    <Key>
+      <PropertyRef Name="IdPedido" />
+    </Key>
+    <Property Name="IdPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Sucursal" Relationship="Self.FK_Pedido_Sucursal1" FromRole="Pedido" ToRole="Sucursal" />
+    <NavigationProperty Name="PedidoDetalle" Relationship="Self.FK_PedidoDetalle_Pedido" FromRole="Pedido" ToRole="PedidoDetalle" />
+  </EntityType>
+  <EntityType Name="PedidoDetalle">
+    <Key>
+      <PropertyRef Name="IdPedidoDetalle" />
+    </Key>
+    <Property Name="IdPedidoDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPedido" Type="Int32" Nullable="false" />
+    <Property Name="Sku" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Pedido" Relationship="Self.FK_PedidoDetalle_Pedido" FromRole="PedidoDetalle" ToRole="Pedido" />
+  </EntityType>
+  <EntityType Name="Recibo">
+    <Key>
+      <PropertyRef Name="IdRecibo" />
+    </Key>
+    <Property Name="IdRecibo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="IdApartado" Type="Int32" Nullable="false" />
+    <Property Name="Cuota" Type="Double" Nullable="false" />
+    <Property Name="IVA" Type="Double" Nullable="false" />
+    <Property Name="Anulado" Type="Boolean" Nullable="false" />
+    <Property Name="Tasa" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Apartado" Relationship="Self.FK_Recibo_Apartado" FromRole="Recibo" ToRole="Apartado" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Recibo_Cliente" FromRole="Recibo" ToRole="Cliente" />
+    <NavigationProperty Name="PagoRecibo" Relationship="Self.FK_PagoRecibo_Recibo" FromRole="Recibo" ToRole="PagoRecibo" />
+  </EntityType>
+  <EntityType Name="Sucursal">
+    <Key>
+      <PropertyRef Name="IdSucursal" />
+    </Key>
+    <Property Name="IdSucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ubicacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Apartado" Relationship="Self.FK_Apartado_Sucursal" FromRole="Sucursal" ToRole="Apartado" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Sucursal1" FromRole="Sucursal" ToRole="Factura" />
+    <NavigationProperty Name="GastosOrganizacion" Relationship="Self.FK_GastosOrganizacion_Sucursal1" FromRole="Sucursal" ToRole="GastosOrganizacion" />
+    <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Sucursal1" FromRole="Sucursal" ToRole="Pedido" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="IdVendedor" />
+    </Key>
+    <Property Name="IdVendedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreVendedor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApellidoVendedor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodVendedor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="CreadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModificadoUTC" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Apartado" Relationship="Self.FK_Apartado_Vendedor" FromRole="Vendedor" ToRole="Apartado" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Vendedor" FromRole="Vendedor" ToRole="Factura" />
+  </EntityType>
+  <EntityType Name="vInventario">
+    <Key>
+      <PropertyRef Name="IdStock" />
+    </Key>
+    <Property Name="IdStock" Type="Int32" Nullable="false" />
+    <Property Name="Sku" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="StockQuantity" Type="Int32" />
+    <Property Name="Sucursal" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Talla" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Apartado_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Apartado" Type="Self.Apartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Apartado">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Apartado_Sucursal">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="Apartado" Type="Self.Apartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="IdSucursal" />
+      </Principal>
+      <Dependent Role="Apartado">
+        <PropertyRef Name="IdSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Apartado_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="1" />
+    <End Role="Apartado" Type="Self.Apartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="IdVendedor" />
+      </Principal>
+      <Dependent Role="Apartado">
+        <PropertyRef Name="IdVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleApartado_Apartado">
+    <End Role="Apartado" Type="Self.Apartado" Multiplicity="1" />
+    <End Role="DetalleApartado" Type="Self.DetalleApartado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartado">
+        <PropertyRef Name="IdApartado" />
+      </Principal>
+      <Dependent Role="DetalleApartado">
+        <PropertyRef Name="IdApartado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recibo_Apartado">
+    <End Role="Apartado" Type="Self.Apartado" Multiplicity="1" />
+    <End Role="Recibo" Type="Self.Recibo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartado">
+        <PropertyRef Name="IdApartado" />
+      </Principal>
+      <Dependent Role="Recibo">
+        <PropertyRef Name="IdApartado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factura_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recibo_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Recibo" Type="Self.Recibo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Recibo">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleFactura_Factura">
+    <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+    <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="IdFactura" />
+      </Principal>
+      <Dependent Role="DetalleFactura">
+        <PropertyRef Name="IdFactura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factura_Sucursal1">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="IdSucursal" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="IdSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factura_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="IdVendedor" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="IdVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PagoFactura_Factura">
+    <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+    <End Role="PagoFactura" Type="Self.PagoFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="IdFactura" />
+      </Principal>
+      <Dependent Role="PagoFactura">
+        <PropertyRef Name="IdFactura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GastosOrganizacion_Gasto">
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="1" />
+    <End Role="GastosOrganizacion" Type="Self.GastosOrganizacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gasto">
+        <PropertyRef Name="IdGasto" />
+      </Principal>
+      <Dependent Role="GastosOrganizacion">
+        <PropertyRef Name="IdGasto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GastosOrganizacion_Sucursal1">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="GastosOrganizacion" Type="Self.GastosOrganizacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="IdSucursal" />
+      </Principal>
+      <Dependent Role="GastosOrganizacion">
+        <PropertyRef Name="IdSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PagoFactura_MetodoPago">
+    <End Role="MetodoPago" Type="Self.MetodoPago" Multiplicity="1" />
+    <End Role="PagoFactura" Type="Self.PagoFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MetodoPago">
+        <PropertyRef Name="IdMetodoPago" />
+      </Principal>
+      <Dependent Role="PagoFactura">
+        <PropertyRef Name="IdMetodoPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PagoRecibo_MetodoPago">
+    <End Role="MetodoPago" Type="Self.MetodoPago" Multiplicity="1" />
+    <End Role="PagoRecibo" Type="Self.PagoRecibo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MetodoPago">
+        <PropertyRef Name="IdMetodoPago" />
+      </Principal>
+      <Dependent Role="PagoRecibo">
+        <PropertyRef Name="IdMetodoDePago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PagoRecibo_Recibo">
+    <End Role="Recibo" Type="Self.Recibo" Multiplicity="1" />
+    <End Role="PagoRecibo" Type="Self.PagoRecibo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Recibo">
+        <PropertyRef Name="IdRecibo" />
+      </Principal>
+      <Dependent Role="PagoRecibo">
+        <PropertyRef Name="IdRecibo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedido_Sucursal1">
+    <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursal">
+        <PropertyRef Name="IdSucursal" />
+      </Principal>
+      <Dependent Role="Pedido">
+        <PropertyRef Name="IdSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidoDetalle_Pedido">
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+    <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedido">
+        <PropertyRef Name="IdPedido" />
+      </Principal>
+      <Dependent Role="PedidoDetalle">
+        <PropertyRef Name="IdPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_A372E9_nopcurvasDesignEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Apartado" EntityType="Self.Apartado" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Descuento" EntityType="Self.Descuento" />
+    <EntitySet Name="DetalleApartado" EntityType="Self.DetalleApartado" />
+    <EntitySet Name="DetalleFactura" EntityType="Self.DetalleFactura" />
+    <EntitySet Name="Factura" EntityType="Self.Factura" />
+    <EntitySet Name="Gasto" EntityType="Self.Gasto" />
+    <EntitySet Name="GastosOrganizacion" EntityType="Self.GastosOrganizacion" />
+    <EntitySet Name="IVA" EntityType="Self.IVA" />
+    <EntitySet Name="MetodoPago" EntityType="Self.MetodoPago" />
+    <EntitySet Name="Moneda" EntityType="Self.Moneda" />
+    <EntitySet Name="PagoFactura" EntityType="Self.PagoFactura" />
+    <EntitySet Name="PagoRecibo" EntityType="Self.PagoRecibo" />
+    <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+    <EntitySet Name="PedidoDetalle" EntityType="Self.PedidoDetalle" />
+    <EntitySet Name="Recibo" EntityType="Self.Recibo" />
+    <EntitySet Name="Sucursal" EntityType="Self.Sucursal" />
+    <EntitySet Name="Vendedor" EntityType="Self.Vendedor" />
+    <EntitySet Name="vInventario" EntityType="Self.vInventario" />
+    <AssociationSet Name="FK_Apartado_Cliente" Association="Self.FK_Apartado_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Apartado" EntitySet="Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Apartado_Sucursal" Association="Self.FK_Apartado_Sucursal">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="Apartado" EntitySet="Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Apartado_Vendedor" Association="Self.FK_Apartado_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Apartado" EntitySet="Apartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleApartado_Apartado" Association="Self.FK_DetalleApartado_Apartado">
+      <End Role="Apartado" EntitySet="Apartado" />
+      <End Role="DetalleApartado" EntitySet="DetalleApartado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recibo_Apartado" Association="Self.FK_Recibo_Apartado">
+      <End Role="Apartado" EntitySet="Apartado" />
+      <End Role="Recibo" EntitySet="Recibo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recibo_Cliente" Association="Self.FK_Recibo_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Recibo" EntitySet="Recibo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleFactura_Factura" Association="Self.FK_DetalleFactura_Factura">
+      <End Role="Factura" EntitySet="Factura" />
+      <End Role="DetalleFactura" EntitySet="DetalleFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factura_Sucursal1" Association="Self.FK_Factura_Sucursal1">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factura_Vendedor" Association="Self.FK_Factura_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PagoFactura_Factura" Association="Self.FK_PagoFactura_Factura">
+      <End Role="Factura" EntitySet="Factura" />
+      <End Role="PagoFactura" EntitySet="PagoFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GastosOrganizacion_Gasto" Association="Self.FK_GastosOrganizacion_Gasto">
+      <End Role="Gasto" EntitySet="Gasto" />
+      <End Role="GastosOrganizacion" EntitySet="GastosOrganizacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GastosOrganizacion_Sucursal1" Association="Self.FK_GastosOrganizacion_Sucursal1">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="GastosOrganizacion" EntitySet="GastosOrganizacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PagoFactura_MetodoPago" Association="Self.FK_PagoFactura_MetodoPago">
+      <End Role="MetodoPago" EntitySet="MetodoPago" />
+      <End Role="PagoFactura" EntitySet="PagoFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PagoRecibo_MetodoPago" Association="Self.FK_PagoRecibo_MetodoPago">
+      <End Role="MetodoPago" EntitySet="MetodoPago" />
+      <End Role="PagoRecibo" EntitySet="PagoRecibo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PagoRecibo_Recibo" Association="Self.FK_PagoRecibo_Recibo">
+      <End Role="Recibo" EntitySet="Recibo" />
+      <End Role="PagoRecibo" EntitySet="PagoRecibo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedido_Sucursal1" Association="Self.FK_Pedido_Sucursal1">
+      <End Role="Sucursal" EntitySet="Sucursal" />
+      <End Role="Pedido" EntitySet="Pedido" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidoDetalle_Pedido" Association="Self.FK_PedidoDetalle_Pedido">
+      <End Role="Pedido" EntitySet="Pedido" />
+      <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
+    </AssociationSet>
+    <FunctionImport Name="spInsertProductsInventory">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Color" Mode="In" Type="String" />
+      <Parameter Name="ShortDescription" Mode="In" Type="String" />
+      <Parameter Name="Tela" Mode="In" Type="String" />
+      <Parameter Name="Price" Mode="In" Type="Decimal" />
+      <Parameter Name="ProductPublishedString" Mode="In" Type="String" />
+      <Parameter Name="SlugProducto" Mode="In" Type="String" />
+      <Parameter Name="CategoryPrincipal" Mode="In" Type="String" />
+      <Parameter Name="SlugCategoryPrincipal" Mode="In" Type="String" />
+      <Parameter Name="CategorySecondary" Mode="In" Type="String" />
+      <Parameter Name="SlugCategorySecondary" Mode="In" Type="String" />
+      <Parameter Name="Sucursal" Mode="In" Type="String" />
+      <Parameter Name="Talla" Mode="In" Type="String" />
+      <Parameter Name="InventoryQuantity" Mode="In" Type="Int32" />
+      <Parameter Name="SkuShort" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="vPicture_Product" EntityType="DB_A372E9_nopcurvasDesignModel.vPicture_Product" />
+  </EntityContainer>
+  <EntityType Name="vPicture_Product">
+    <Key>
+      <PropertyRef Name="PictureId" />
+    </Key>
+    <Property Name="PictureId" Type="Int32" Nullable="false" />
+    <Property Name="Sku" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

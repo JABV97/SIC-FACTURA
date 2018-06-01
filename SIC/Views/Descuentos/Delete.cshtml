@@ -1,0 +1,83 @@
+﻿@model shanuMVCUserRoles.Entidad.Descuento
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Eliminar descuento
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li>@Html.ActionLink("Descuentos", "Index")</li>
+        <li class="active">Eliminar</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="callout callout-danger">
+        <h5>¿Está seguro que desea eliminar este registro?</h5>
+    </div>
+    <div class='box box-default color-palette-box'>
+        <div class='box-header with-border'>
+            <h3 class='box-title'><i class="fa fa-tag"></i>Descuento seleccionado</h3>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="box-body">
+                @Html.HiddenFor(model => model.IdDescuento)
+                @Html.HiddenFor(model => model.CreadoUTC)
+                @Html.HiddenFor(model => model.ModificadoUTC, new { @Value = DateTime.Now.ToString() })
+                @Html.HiddenFor(model => model.Eliminado, new { @Value = true })
+                @Html.HiddenFor(model => model.nombre)
+                @Html.HiddenFor(model => model.deduccion)
+                @Html.HiddenFor(model => model.activo)
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.nombre)
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.nombre)
+
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.deduccion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.deduccion)
+
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.activo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.activo)
+
+                    </dd>                    
+                </dl>
+
+                <div class="box-footer">
+                    <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+                    @Html.ActionLink("Cancelar", "Index", "", new { @class = "btn btn-danger" })
+                </div>
+
+            </div>
+
+        }
+    </div>
+
+</section>
+
+
+

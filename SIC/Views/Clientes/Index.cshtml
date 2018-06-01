@@ -1,0 +1,111 @@
+﻿@model IEnumerable<shanuMVCUserRoles.Entidad.Cliente>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Clientes
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-home"></i>@Html.ActionLink("Principal", "AdminIndex", "Home")</li>
+        <li class="active">Clientes</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Administrar Clientes</h2>
+                </div><!-- /.box-header -->
+                <div class="box-header">
+                    <h5 class="box-title">
+                        @Html.ActionLink("Crear Nuevo", "Create", "", new { @class = "btn btn-info" })
+                    </h5>
+                </div>
+
+                <div class="box-body">
+                    <table id="table2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Apellido)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Direccion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Telefono)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Where(n => n.Eliminado == false))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Apellido)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Direccion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Telefono)
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }) |
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCliente }, new { @class = "text-red" })
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Apellido)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Direccion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Telefono)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+
+    <script type="text/javascript">
+    $(function () {
+        $("#table2").dataTable();
+    });
+    </script>
+}
+
